@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheMuiz Girls Random</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ffafaf);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 95%;
+            max-width: 900px;
+            height: 95vh;
+            max-height: 700px;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ff6b6b;
+            position: relative;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff6b6b;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #ff4d4d;
+        }
+        
+        h1 {
+            color: #ff4d4d;
+            font-size: 3.5rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #ff4d4d, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #ff4d4d;
+            font-size: 1.4rem;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            display: flex;
+            flex: 1;
+            gap: 30px;
+            margin-top: 10px;
+        }
+        
+        .image-container {
+            flex: 1;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            background: linear-gradient(45deg, #ffafaf, #ffd6d6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+        
+        .face-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading {
+            position: absolute;
+            font-size: 1.8rem;
+            color: #ff4d4d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: spin 1.5s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .controls {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #ff4d4d, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            font-size: 1.4rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 77, 77, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(255, 77, 77, 0.6);
+            background: linear-gradient(to right, #ff6b6b, #ff4d4d);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .counter-container {
+            background: linear-gradient(45deg, #ffd6d6, #ffafaf);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .counter-title {
+            font-size: 1.3rem;
+            color: #ff4d4d;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .counter {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ff4d4d;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        
+        .info-title {
+            color: #ff4d4d;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .credit {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ffafaf;
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+        
+        .floating-text {
+            position: absolute;
+            font-size: 8rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.1);
+            transform: rotate(-30deg);
+            z-index: -1;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .floating-text.top {
+            top: -50px;
+            left: -50px;
+        }
+        
+        .floating-text.bottom {
+            bottom: -70px;
+            right: -50px;
+        }
+        
+        .key-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #ff4d4d;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .key-hint kbd {
+            background: #ff4d4d;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+        
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .controls {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .counter-container, .info {
+                flex: 1;
+                min-width: 250px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .image-container {
+                min-height: 300px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                height: 95vh;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .logo {
+                position: static;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+            
+            .controls {
+                gap: 15px;
+            }
+            
+            .btn {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+            
+            .counter {
+                font-size: 2.5rem;
+            }
+            
+            .floating-text {
+                font-size: 5rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="floating-text top">TheMuiz</div>
+    <div class="floating-text bottom">Girls</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <span>TheMuiz</span>
+            </div>
+            <h1>Girls Random</h1>
+            <div class="subtitle">ภาพสาวสวยที่ถูกสร้างโดย AI - ไม่มีตัวตนจริง!</div>
+        </div>
+        
+        <div class="content">
+            <div class="image-container">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <span>กำลังโหลดภาพสวยๆ...</span>
+                </div>
+                <img id="faceImage" class="face-image" alt="ภาพสาวสวยที่ถูกสร้างโดย AI">
+            </div>
+            
+            <div class="controls">
+                <button id="randomBtn" class="btn">
+                    <i class="fas fa-random"></i>
+                    สุ่มสาวสวยใหม่
+                </button>
+                
+                <div class="counter-container">
+                    <div class="counter-title">คุณได้ดูสาวสวยไปแล้ว</div>
+                    <div class="counter"><span id="counter">0</span></div>
+                </div>
+                
+                <div class="info">
+                    <div class="info-title">
+                        <i class="fas fa-info-circle"></i>
+                        ข้อมูลภาพ
+                    </div>
+                    <p>ภาพทั้งหมดถูกสร้างโดย AI จากเว็บไซต์ <strong>This Person Does Not Exist</strong></p>
+                    <p>บุคคลในภาพไม่มีตัวตนจริงๆ ในโลก เป็นเพียงผลลัพธ์จากโมเดลการเรียนรู้ของเครื่อง (GAN)</p>
+                    <p class="credit">TheMuiz Girls Random © 2023</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="key-hint">
+            กด <kbd>Space</kbd> หรือ <kbd>R</kbd> เพื่อสุ่มภาพใหม่
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faceImage = document.getElementById('faceImage');
+            const randomBtn = document.getElementById('randomBtn');
+            const loadingElement = document.querySelector('.loading');
+            const counterElement = document.getElementById('counter');
+            
+            let counter = 0;
+            
+            // ฟังก์ชันโหลดภาพใหม่
+            function loadNewImage() {
+                // แสดงข้อความกำลังโหลด
+                faceImage.style.opacity = '0';
+                loadingElement.style.display = 'flex';
+                
+                // สร้าง URL พร้อม timestamp เพื่อหลีกเลี่ยงการแคช
+                const timestamp = new Date().getTime();
+                const imageUrl = `https://thispersondoesnotexist.com/?${timestamp}`;
+                
+                // สร้าง Image object เพื่อโหลดภาพก่อน
+                const img = new Image();
+                img.onload = function() {
+                    // เมื่อโหลดภาพสำเร็จ
+                    faceImage.src = imageUrl;
+                    faceImage.onload = function() {
+                        // ซ่อนข้อความกำลังโหลดและแสดงภาพ
+                        loadingElement.style.display = 'none';
+                        faceImage.style.opacity = '1';
+                        
+                        // เพิ่มตัวนับ
+                        counter++;
+                        counterElement.textContent = counter;
+                    };
+                };
+                
+                img.onerror = function() {
+                    // หากเกิดข้อผิดพลาดในการโหลด
+                    loadingElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> เกิดข้อผิดพลาด กรุณาลองใหม่';
+                };
+                
+                img.src = imageUrl;
+            }
+            
+            // โหลดภาพแรกเมื่อหน้าเว็บโหลดเสร็จ
+            loadNewImage();
+            
+            // ตั้งค่าการคลิกปุ่ม
+            randomBtn.addEventListener('click', loadNewImage);
+            
+            // เพิ่มคีย์ลัดสำหรับการสุ่มภาพใหม่
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space' || e.code === 'KeyR') {
+                    loadNewImage();
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
