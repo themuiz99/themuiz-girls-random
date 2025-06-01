@@ -7,64 +7,76 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        html, body {
+            height: 100%;
+            width: 100vw;
+            overflow: hidden !important; /* ปิด scroll */
         }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             color: #e0e0ff;
             min-height: 100vh;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            max-width: 100vw;
+            max-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 0;
             overflow: hidden;
-            padding: 20px;
-            text-align: center;
         }
-
-        .container {
-            max-width: 800px;
+        header {
             width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-            padding: 20px;
+            align-items: baseline;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            white-space: nowrap;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
         h1 {
             font-family: 'Pacifico', cursive;
-            font-size: 3.8rem;
+            font-size: 2.5rem;
             color: #ff9ff3;
-            text-shadow: 0 0 15px rgba(255, 159, 243, 0.7),
+            text-shadow: 0 0 14px rgba(255, 159, 243, 0.7),
                          0 0 30px rgba(255, 159, 243, 0.5),
                          0 0 45px rgba(255, 159, 243, 0.3);
-            margin-bottom: 10px;
+            margin-bottom: 0;
+            margin-right: 10px;
             letter-spacing: 1px;
             animation: glow 2s ease-in-out infinite alternate;
+            line-height: 1;
         }
-
         .tagline {
             font-size: 1.2rem;
             color: #a5b1c2;
-            margin-top: -5px;
-            margin-bottom: 20px;
+            margin: 0;
+            font-weight: 500;
         }
-
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
         .image-container {
-            width: 100%;
-            max-width: 500px;
-            height: 500px;
+            width: 340px;
+            height: 340px;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -74,123 +86,85 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 18px;
         }
-
         .person-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: opacity 0.3s ease;
         }
-
         .loading {
             position: absolute;
             font-size: 2rem;
             color: #ff9ff3;
             animation: spin 1s linear infinite;
         }
-
         .controls {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            width: 100%;
-            max-width: 500px;
+            gap: 18px;
+            width: 340px;
+            margin-bottom: 0;
         }
-
         .btn {
             flex: 1;
-            padding: 18px 25px;
-            font-size: 1.4rem;
+            padding: 13px 0;
+            font-size: 1.15rem;
             font-weight: bold;
-            border-radius: 15px;
+            border-radius: 13px;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            transition: all 0.3s ease;
+            gap: 8px;
+            transition: all 0.3s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-
         .btn:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
         .random-btn {
             background: linear-gradient(to right, #ff9a9e, #fad0c4);
             color: #2c3e50;
         }
-
         .save-btn {
             background: linear-gradient(to right, #a1c4fd, #c2e9fb);
             color: #2c3e50;
         }
-
         .icon {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
         }
-
         .credit {
-            margin-top: 25px;
-            font-size: 0.9rem;
+            margin-top: 13px;
+            font-size: 0.92rem;
             color: #636e72;
             opacity: 0.7;
         }
-
         /* Animations */
         @keyframes glow {
-            from {
-                text-shadow: 0 0 10px rgba(255, 159, 243, 0.7),
-                             0 0 20px rgba(255, 159, 243, 0.5),
-                             0 0 30px rgba(255, 159, 243, 0.3);
-            }
-            to {
-                text-shadow: 0 0 15px rgba(255, 159, 243, 0.8),
-                             0 0 30px rgba(255, 159, 243, 0.6),
-                             0 0 45px rgba(255, 159, 243, 0.4);
-            }
+            from { text-shadow: 0 0 10px rgba(255, 159, 243, 0.7), 0 0 20px rgba(255, 159, 243, 0.5), 0 0 30px rgba(255, 159, 243, 0.3);}
+            to   { text-shadow: 0 0 15px rgba(255, 159, 243, 0.8), 0 0 30px rgba(255, 159, 243, 0.6), 0 0 45px rgba(255, 159, 243, 0.4);}
         }
-
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg);}
+            100% {transform: rotate(360deg);}
         }
-
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0;}
+            to { opacity: 1;}
         }
-
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
-
-        /* Responsive design */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.8rem;
-            }
-            
-            .image-container {
-                height: 400px;
-            }
-            
-            .controls {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .btn {
-                padding: 16px 20px;
-                font-size: 1.2rem;
-            }
+        @media (max-width: 480px) {
+            .image-container, .controls {width: 95vw; min-width: 0; max-width: 99vw; height: 60vw; max-height: 99vw;}
+            .controls {flex-direction: column; gap: 11px;}
+            .btn {padding: 12px 0; font-size: 1rem;}
+            h1 {font-size: 1.3rem;}
+            .tagline {font-size: 1rem;}
         }
     </style>
 </head>
@@ -198,83 +172,79 @@
     <div class="container">
         <header>
             <h1>สุ่มภาพบุคคลที่ไม่มีอยู่จริง</h1>
-            <div class="tagline">ภาพบุคคลที่สร้างขึ้นโดย AI</div>
+            <span class="tagline">ภาพบุคคลที่สร้างขึ้นโดย AI</span>
         </header>
-        
-        <div class="image-container">
-            <div class="loading"><i class="fas fa-spinner"></i></div>
-            <img id="personImage" class="person-image" alt="บุคคลที่ไม่มีอยู่จริง" />
+        <div class="main-content">
+            <div class="image-container">
+                <div class="loading"><i class="fas fa-spinner"></i></div>
+                <img id="personImage" class="person-image" alt="บุคคลที่ไม่มีอยู่จริง" />
+            </div>
+            <div class="controls">
+                <button id="randomBtn" class="btn random-btn">
+                    <i class="fas fa-random icon"></i> สุ่มภาพ
+                </button>
+                <button id="saveBtn" class="btn save-btn">
+                    <i class="fas fa-save icon"></i> บันทึกรูปภาพ
+                </button>
+            </div>
+            <div class="credit">Themuiz</div>
         </div>
-        
-        <div class="controls">
-            <button id="randomBtn" class="btn random-btn">
-                <i class="fas fa-random icon"></i> สุ่มภาพ
-            </button>
-            <button id="saveBtn" class="btn save-btn">
-                <i class="fas fa-save icon"></i> บันทึกรูปภาพ
-            </button>
-        </div>
-        
-        <div class="credit">Themuiz</div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const personImage = document.getElementById('personImage');
             const randomBtn = document.getElementById('randomBtn');
             const saveBtn = document.getElementById('saveBtn');
             const loading = document.querySelector('.loading');
-            
             // Load initial image
             loadNewImage();
-            
-            // Random button click event
             randomBtn.addEventListener('click', loadNewImage);
-            
-            // Save button click event
             saveBtn.addEventListener('click', saveImage);
-            
+
             function loadNewImage() {
-                // Show loading spinner
                 loading.style.display = 'block';
                 personImage.style.opacity = '0';
-                
-                // Generate new image with timestamp to prevent caching
                 const timestamp = new Date().getTime();
                 const newImage = new Image();
-                
+
                 newImage.onload = function() {
                     personImage.src = this.src;
                     personImage.classList.add('fade-in');
                     personImage.style.opacity = '1';
                     loading.style.display = 'none';
-                    
-                    // Remove animation class after it completes
                     setTimeout(() => {
                         personImage.classList.remove('fade-in');
                     }, 500);
                 };
-                
                 newImage.onerror = function() {
-                    // If error, try again after short delay
                     setTimeout(loadNewImage, 500);
                 };
-                
                 newImage.src = `https://thispersondoesnotexist.com/?${timestamp}`;
             }
-            
+
             function saveImage() {
                 const imageUrl = personImage.src;
-                
-                // Create a temporary link to download the image
-                const downloadLink = document.createElement('a');
-                downloadLink.href = imageUrl;
-                downloadLink.download = 'บุคคลที่ไม่มีอยู่จริง.jpg';
-                
-                // Trigger the download
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
+                fetch(imageUrl, {mode: 'cors'})
+                  .then(resp => resp.blob())
+                  .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = url;
+                    downloadLink.download = 'บุคคลที่ไม่มีอยู่จริง.jpg';
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    window.URL.revokeObjectURL(url);
+                  })
+                  .catch(() => {
+                    // fallback ถ้าดาวน์โหลด blob ไม่ได้
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = imageUrl;
+                    downloadLink.download = 'บุคคลที่ไม่มีอยู่จริง.jpg';
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                  });
             }
         });
     </script>
