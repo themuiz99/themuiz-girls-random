@@ -10,7 +10,7 @@
         html, body {
             height: 100%;
             width: 100vw;
-            overflow: hidden !important; /* ปิด scroll */
+            overflow: hidden;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -50,11 +50,8 @@
         }
         h1 {
             font-family: 'Pacifico', cursive;
-            font-size: 2.5rem;
+            font-size: 2.0rem;
             color: #ff9ff3;
-            text-shadow: 0 0 14px rgba(255, 159, 243, 0.7),
-                         0 0 30px rgba(255, 159, 243, 0.5),
-                         0 0 45px rgba(255, 159, 243, 0.3);
             margin-bottom: 0;
             margin-right: 10px;
             letter-spacing: 1px;
@@ -62,7 +59,7 @@
             line-height: 1;
         }
         .tagline {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #a5b1c2;
             margin: 0;
             font-weight: 500;
@@ -75,8 +72,9 @@
             justify-content: center;
         }
         .image-container {
-            width: 340px;
-            height: 340px;
+            width: 320px;
+            height: 320px;
+            aspect-ratio: 1 / 1;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -91,6 +89,7 @@
         .person-image {
             width: 100%;
             height: 100%;
+            aspect-ratio: 1/1;
             object-fit: cover;
             transition: opacity 0.3s ease;
         }
@@ -103,27 +102,30 @@
         .controls {
             display: flex;
             justify-content: center;
-            gap: 18px;
-            width: 340px;
+            gap: 10px;
+            width: 320px;
             margin-bottom: 0;
         }
         .btn {
             flex: 1;
-            padding: 13px 0;
-            font-size: 1.15rem;
+            padding: 8px 0;
+            font-size: 1.0rem;
             font-weight: bold;
-            border-radius: 13px;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: all 0.3s;
+            gap: 6px;
+            transition: all 0.2s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
+        .btn:active {
+            transform: translateY(1px);
+        }
         .btn:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
         .random-btn {
@@ -135,7 +137,7 @@
             color: #2c3e50;
         }
         .icon {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
         }
         .credit {
             margin-top: 13px;
@@ -143,7 +145,13 @@
             color: #636e72;
             opacity: 0.7;
         }
-        /* Animations */
+        @media (max-width: 480px) {
+            .image-container, .controls {width: 95vw; min-width: 0; max-width: 99vw; height: 95vw; max-height: 99vw;}
+            .controls {flex-direction: column; gap: 8px;}
+            .btn {padding: 9px 0; font-size: 0.92rem;}
+            h1 {font-size: 1.1rem;}
+            .tagline {font-size: 0.92rem;}
+        }
         @keyframes glow {
             from { text-shadow: 0 0 10px rgba(255, 159, 243, 0.7), 0 0 20px rgba(255, 159, 243, 0.5), 0 0 30px rgba(255, 159, 243, 0.3);}
             to   { text-shadow: 0 0 15px rgba(255, 159, 243, 0.8), 0 0 30px rgba(255, 159, 243, 0.6), 0 0 45px rgba(255, 159, 243, 0.4);}
@@ -159,13 +167,6 @@
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
-        @media (max-width: 480px) {
-            .image-container, .controls {width: 95vw; min-width: 0; max-width: 99vw; height: 60vw; max-height: 99vw;}
-            .controls {flex-direction: column; gap: 11px;}
-            .btn {padding: 12px 0; font-size: 1rem;}
-            h1 {font-size: 1.3rem;}
-            .tagline {font-size: 1rem;}
-        }
     </style>
 </head>
 <body>
@@ -180,11 +181,11 @@
                 <img id="personImage" class="person-image" alt="บุคคลที่ไม่มีอยู่จริง" />
             </div>
             <div class="controls">
-                <button id="randomBtn" class="btn random-btn">
-                    <i class="fas fa-random icon"></i> สุ่มภาพ
+                <button id="randomBtn" class="btn random-btn" title="สุ่มภาพ">
+                    <i class="fas fa-random icon"></i>
                 </button>
-                <button id="saveBtn" class="btn save-btn">
-                    <i class="fas fa-save icon"></i> บันทึกรูปภาพ
+                <button id="saveBtn" class="btn save-btn" title="บันทึกรูปภาพ">
+                    <i class="fas fa-save icon"></i>
                 </button>
             </div>
             <div class="credit">Themuiz</div>
@@ -196,17 +197,13 @@
             const randomBtn = document.getElementById('randomBtn');
             const saveBtn = document.getElementById('saveBtn');
             const loading = document.querySelector('.loading');
-            // Load initial image
-            loadNewImage();
-            randomBtn.addEventListener('click', loadNewImage);
-            saveBtn.addEventListener('click', saveImage);
-
+            
             function loadNewImage() {
                 loading.style.display = 'block';
                 personImage.style.opacity = '0';
                 const timestamp = new Date().getTime();
                 const newImage = new Image();
-
+                newImage.setAttribute('crossOrigin', 'anonymous');
                 newImage.onload = function() {
                     personImage.src = this.src;
                     personImage.classList.add('fade-in');
@@ -221,31 +218,41 @@
                 };
                 newImage.src = `https://thispersondoesnotexist.com/?${timestamp}`;
             }
+            randomBtn.addEventListener('click', loadNewImage);
 
-            function saveImage() {
-                const imageUrl = personImage.src;
-                fetch(imageUrl, {mode: 'cors'})
-                  .then(resp => resp.blob())
-                  .then(blob => {
-                    const url = window.URL.createObjectURL(blob);
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = url;
-                    downloadLink.download = 'บุคคลที่ไม่มีอยู่จริง.jpg';
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                    window.URL.revokeObjectURL(url);
-                  })
-                  .catch(() => {
-                    // fallback ถ้าดาวน์โหลด blob ไม่ได้
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = imageUrl;
-                    downloadLink.download = 'บุคคลที่ไม่มีอยู่จริง.jpg';
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                  });
-            }
+            // ฟังก์ชันบันทึกรูปภาพเป็น themuiz.jpg โดยไม่เปลี่ยนหน้า
+            saveBtn.addEventListener('click', function() {
+                // สร้าง canvas เพื่อวาดรูปภาพแล้วดาวน์โหลด
+                const img = personImage;
+                const size = Math.min(img.naturalWidth, img.naturalHeight) || 512;
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                // วาดเฉพาะส่วนที่เป็นจัตุรัสตรงกลาง
+                if(img.naturalWidth > img.naturalHeight) {
+                    ctx.drawImage(img, (img.naturalWidth-img.naturalHeight)/2, 0, size, size, 0, 0, size, size);
+                } else if(img.naturalHeight > img.naturalWidth) {
+                    ctx.drawImage(img, 0, (img.naturalHeight-img.naturalWidth)/2, size, size, 0, 0, size, size);
+                } else {
+                    ctx.drawImage(img, 0, 0, size, size, 0, 0, size, size);
+                }
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'themuiz.jpg';
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+                }, 'image/jpeg', 0.92);
+            });
+
+            // โหลดรูปแรก
+            loadNewImage();
         });
     </script>
 </body>
